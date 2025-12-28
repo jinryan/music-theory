@@ -15,9 +15,63 @@
             padding: 0;
             overflow: hidden;
         }
+        #controls {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            border-radius: 6px;
+            z-index: 1;
+        }
+        #controls label {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            gap: 4px;
+        }
+        #controls input {
+            width: 80px;
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #111;
+            color: #fff;
+        }
+        #controls button {
+            padding: 8px 12px;
+            background: #2d7ff9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #controls button:hover {
+            background: #1b63c4;
+        }
     </style>
 </head>
 <body>
+    <div id="controls">
+        <label>
+            x init
+            <input id="x-init" type="number" step="0.1" value="0.1">
+        </label>
+        <label>
+            y init
+            <input id="y-init" type="number" step="0.1" value="0">
+        </label>
+        <label>
+            μ base
+            <input id="mu-base" type="number" step="0.1" value="1.5">
+        </label>
+        <button id="rerun">Rerun</button>
+    </div>
     <canvas id="attractor"></canvas>
     <script src="script.js"></script>
 </body>
