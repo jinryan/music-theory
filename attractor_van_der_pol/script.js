@@ -5,7 +5,6 @@ const xInput = document.getElementById('x-init');
 const yInput = document.getElementById('y-init');
 const muInput = document.getElementById('mu-base');
 const rerunButton = document.getElementById('rerun');
-const toggleAudioButton = document.getElementById('toggle-audio');
 
 let x = 0.1;
 let y = 0.0;
@@ -16,7 +15,7 @@ let t = 0;
 let time = 0;
 let prevX = x;
 let lastNoteTime = 0;
-const minInterval = 0.15; // seconds
+const minInterval = 0.2; // seconds
 
 // integration
 const maxStep = 0.005; // seconds per integration slice to keep Euler stable if frames spike
@@ -53,7 +52,7 @@ function mu(time) {
 }
 
 // map x, y in [-R, R] to canvas pixels
-const R = 5.0;
+const R = 4.0;
 function toPxX(x) { return (x / (2 * R) + 0.5) * canvas.width; }
 function toPxY(y) { return (0.5 - y / (2 * R)) * canvas.height; }
 
@@ -71,8 +70,8 @@ function step(dtSeconds) {
     time += dtSeconds;
 
     // event detection: upward zero-crossing with minimum spacing
-    const crossingUp = prevX < 0 && x >= 0;
-    const modulatedInterval = minInterval + 0.2 * Math.sin(time * 0.1);
+    const crossingUp =  true; // prevX < 0 && x >= 0;
+    const modulatedInterval = minInterval; // + 0.08 * Math.sin(time);
     const canTrigger = (time - lastNoteTime) > modulatedInterval;
 
     if (crossingUp && canTrigger) {
@@ -199,11 +198,5 @@ window.addEventListener('resize', () => {
 
 // keep audio happy after user interaction
 rerunButton.addEventListener('click', () => getAudioCtx());
-toggleAudioButton.addEventListener('click', () => {
-    const next = !isAudioEnabled();
-    setAudioEnabled(next);
-    toggleAudioButton.textContent = `Audio: ${next ? "on" : "off"}`;
-    if (next) getAudioCtx();
-});
 
 frame();
